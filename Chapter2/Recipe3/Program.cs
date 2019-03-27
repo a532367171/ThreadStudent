@@ -29,5 +29,10 @@ namespace Chapter2.Recipe3
 			WriteLine($"{name} is completed");
 			_semaphore.Release();
 		}
-	}
+
+        //.Wait() 标识我开始占用  如果线程够的话 我就接下来运行 如果不够 我就挂起  
+        //只等到  有线程 用.Release();把自己释放掉 
+        //  举例 厕所 N个坑位置  .Wait()关门  里面干事情  .Release() 开门  
+        //  后面有其他人只能乖乖的等吧
+    }
 }

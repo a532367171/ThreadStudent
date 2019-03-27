@@ -12,15 +12,15 @@ namespace Chapter2.Recipe4
 			var t = new Thread(() => Process(10));
 			t.Start();
 
-			WriteLine("Waiting for another thread to complete work");
+			WriteLine("主：Waiting for another thread to complete work");
 			_workerEvent.WaitOne();
-			WriteLine("First operation is completed!");
-			WriteLine("Performing an operation on a main thread");
+			WriteLine("主：First operation is completed!");
+			WriteLine("主：Performing an operation on a main thread");
 			Sleep(TimeSpan.FromSeconds(5));
 			_mainEvent.Set();
-			WriteLine("Now running the second operation on a second thread");
+			WriteLine("主：Now running the second operation on a second thread");
 			_workerEvent.WaitOne();
-			WriteLine("Second operation is completed!");
+			WriteLine("主：Second operation is completed!");
 		}
 
 		private static AutoResetEvent _workerEvent = new AutoResetEvent(false);
@@ -28,15 +28,15 @@ namespace Chapter2.Recipe4
 
 		static void Process(int seconds)
 		{
-			WriteLine("Starting a long running work...");
+			WriteLine("次：Starting a long running work...");
 			Sleep(TimeSpan.FromSeconds(seconds));
-			WriteLine("Work is done!");
+			WriteLine("次：Work is done!");
 			_workerEvent.Set();
-			WriteLine("Waiting for a main thread to complete its work");
+			WriteLine("次：Waiting for a main thread to complete its work");
 			_mainEvent.WaitOne();
-			WriteLine("Starting second operation...");
+			WriteLine("次：Starting second operation...");
 			Sleep(TimeSpan.FromSeconds(seconds));
-			WriteLine("Work is done!");
+			WriteLine("次：Work is done!");
 			_workerEvent.Set();
 		}
 	}
